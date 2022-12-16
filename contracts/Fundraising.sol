@@ -98,6 +98,7 @@ contract Fundraising {
         Campaign storage campaign = campaigns[_index];
         require(block.timestamp < campaign.deadline, "Fundraising is over");
         require(campaign.raisedAmount + msg.value <= campaign.goalAmount, "The goal has been reached");
+        // BUG: Missing check if campaign already completed: not a problem for collect method, because collect is only possible afterwards (when deadline or goal is reached) but suspend method is very problematic..
         
         campaign.raisedAmount += msg.value;
         campaignContributions[_index][msg.sender] += msg.value;
