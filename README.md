@@ -16,6 +16,8 @@ The contract is deployed on the Sepolia test network and is accessible under the
 
 ## Getters
 
+For the view methods, of course, you do not need to provide any gas, as there are no state changing transactions involved.
+
 ### Get Campaigns
 
 Get all campaigns:
@@ -83,6 +85,8 @@ instance.getTotalContributions('0xEB343197962A455dd81dDabc0a5Ca1a9c231E8E5');
 
 ## Fundraising Interaction
 
+Get active and start with fundraising or contributing by using this contracts interaction methods. Please make sure that you fullfill the requirements of the individual methods to make the calls successfull (you can do so using the view methods providing the relevant data to check by yourself), otherwise your execution will be reverted and the gas used until this point will be lost.
+
 ### Create a campaign
 
 Create a fundraising campaign:
@@ -102,6 +106,16 @@ instance.create(
 );
 ```
 
+#### Requirements
+
+```
+        Name: 0 < Length <= 100, must be unique
+        Purpose: 0 < Length <= 1000
+        Beneficiaries: Count > 0
+        Goal amount: Goal amount > 0, must be multiples of 0.001
+        Deadline: Must be within next 365 days after set block time
+```
+
 ### Suspend
 
 Suspend an existing fundraising campaign:
@@ -110,6 +124,13 @@ _suspend(uint \_index) public_
 
 ```js
 instance.suspend('0');
+```
+
+#### Requirements
+
+```
+        Campaign: Block time must be before deadline, shall not be completed already
+        Transaction: Caller must be the campaign creator
 ```
 
 ### Contribute
@@ -125,6 +146,13 @@ instance.contribute('0', {
 });
 ```
 
+#### Requirements
+
+```
+        Campaign: Block time must be before deadline, (shall not be completed already), Raised amount + transaction value shall not be greater than goal amount
+        Transaction: Value > 0, must be multiples of 0.001
+```
+
 ### Collect
 
 Collect a fundraising campaign:
@@ -133,4 +161,10 @@ _collect(uint \_index) public_
 
 ```js
 instance.collect('0');
+```
+
+#### Requirements
+
+```
+        Campaign: Block time must be after or equal deadline, shall not be completed already, Raised amount > 0, Transaction caller must be one of the beneficiaries
 ```
