@@ -7,8 +7,8 @@ With this smart contract you can create decentralised fundraising campaigns. You
 To use this dapp make sure you connect to the Sepolia testnetwork by following the steps beyond:
 
 1. Rename `config.example.json` to `config.json` and fill in your MNEMONIC and INFURA_API_KEY. Also make sure you have npm package `@truffle/hdwallet-provider` installed. (by installing with `npm install`)
-2. The ABI `Fundraising.json` is already provided in `build\contracts\`. To interact with the test deployment just hit `truffle console --network sepolia`.
-3. Dispense the following command to get an instance which you then can use `let instance = await Fundraising.deployed()"`
+2. The ABI `Fundraising.json` is already provided in `build\contracts\`. That means you can either connect with the test deployment by hitting `truffle console --network sepolia` or deploy your own instance for example locally by entering `truffle migrate` and then access it with `truffle console`.
+3. Dispense the following command to get an instance which you then can interact with `let instance = await Fundraising.deployed()`
 
 The contract is deployed on the Sepolia test network and is accessible under the following address: **0xFDeC47B667f4c3DdEab5F909b05cC778E7d3b1DC** ([Etherscan Contract](https://sepolia.etherscan.io/address/0x6364c54E3213768f3B394e8C9FC38532EC310768))
 
